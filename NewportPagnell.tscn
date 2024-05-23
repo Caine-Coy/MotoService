@@ -1,0 +1,171 @@
+[gd_scene load_steps=9 format=3 uid="uid://c47ehxfghacsp"]
+
+[ext_resource type="PackedScene" uid="uid://b1ygjhxelx051" path="res://camera.tscn" id="1_8aewq"]
+[ext_resource type="Texture2D" uid="uid://blhcvgfstfr7v" path="res://Assets/Grass.png" id="1_vjcl5"]
+[ext_resource type="Script" path="res://WorldController.gd" id="1_xfic4"]
+[ext_resource type="PackedScene" uid="uid://comghnoutsh3m" path="res://Assets/Buildings/fuel_pump.tscn" id="4_cbisx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2xgp1"]
+albedo_color = Color(0.211765, 0.407843, 0.0392157, 1)
+albedo_texture = ExtResource("1_vjcl5")
+texture_filter = 4
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lf8lt"]
+size = Vector2(100, 100)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p2wfv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8sh7l"]
+size = Vector3(4.04739, 1.69571, 1.70569)
+
+[node name="WorldRoot" type="Node3D"]
+
+[node name="Grass" type="CSGMesh3D" parent="."]
+material_override = SubResource("StandardMaterial3D_2xgp1")
+use_collision = true
+mesh = SubResource("PlaneMesh_lf8lt")
+
+[node name="CameraNode" parent="." instance=ExtResource("1_8aewq")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="CubeCar" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.71635, 2.99035)
+use_collision = true
+size = Vector3(4, 1.7, 1.7)
+
+[node name="VehicleBody3D" type="VehicleBody3D" parent="CubeCar"]
+mass = 1190.0
+physics_material_override = SubResource("PhysicsMaterial_p2wfv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CubeCar/VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00502014, 0.00904846, 0.000305176)
+shape = SubResource("BoxShape3D_8sh7l")
+
+[node name="VehicleWheel3D" type="VehicleWheel3D" parent="CubeCar/VehicleBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.93262, -0.79556, 0.921786)
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="CubeCar/VehicleBody3D/VehicleWheel3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="VehicleWheel3D2" type="VehicleWheel3D" parent="CubeCar/VehicleBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.80186, -0.612084, 0.881479)
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="CubeCar/VehicleBody3D/VehicleWheel3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="VehicleWheel3D3" type="VehicleWheel3D" parent="CubeCar/VehicleBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.76569, -0.575656, -1.17246)
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="CubeCar/VehicleBody3D/VehicleWheel3D3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="VehicleWheel3D4" type="VehicleWheel3D" parent="CubeCar/VehicleBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.88323, -0.810064, -0.900035)
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="CubeCar/VehicleBody3D/VehicleWheel3D4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="Fuel Pump" parent="." instance=ExtResource("4_cbisx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0941467, 0.115414, -0.00272942)
+fuelLevel = 10
+
+[node name="WorldController" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_xfic4")
+petrolPrice = 1.0
+dieselPrice = 1.5
+electricityPrice = 2.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="BoxContainer" parent="CanvasLayer"]
+z_as_relative = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -81.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+vertical = true
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_vjcl5")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="RichTextLabel" parent="CanvasLayer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "This Is the Item You Are Looking At
+Please Do Not"
+fit_content = true
+scroll_following = true
+autowrap_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Petrol Price:"
+
+[node name="Label2" type="Label" parent="CanvasLayer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer"]
+layout_mode = 2
+text = "1 Billion Dollar"
+
+[node name="HotBar" type="PanelContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/HotBar"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer/HotBar/HBoxContainer"]
+layout_mode = 2
+text = "Building"
+
+[node name="Button2" type="Button" parent="CanvasLayer/VBoxContainer/HotBar/HBoxContainer"]
+layout_mode = 2
+text = "Infrastructure
+"
+
+[node name="Button3" type="Button" parent="CanvasLayer/VBoxContainer/HotBar/HBoxContainer"]
+layout_mode = 2
+text = "Money"
+
+[node name="Button4" type="Button" parent="CanvasLayer/VBoxContainer/HotBar/HBoxContainer"]
+layout_mode = 2
+text = "Bulldozer"
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/HotBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 1
+text = "£: 100101010101101"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/VBoxContainer/HotBar/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "12:00"
+
+[connection signal="property_list_changed" from="WorldController" to="WorldController" method="_on_property_list_changed"]
