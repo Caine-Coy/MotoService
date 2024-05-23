@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://bb8wfl5b2rmyr"]
+
+[ext_resource type="Script" path="res://Assets/Roads/road.gd" id="1_mx2ds"]
+[ext_resource type="Texture2D" uid="uid://by383bd3nxl6s" path="res://Assets/Roads/asphalt.png" id="1_wyihi"]
+
+[sub_resource type="Curve3D" id="Curve3D_2hov5"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 132.147, 7.32376, 0.107702, 0, 0, 0, 0, 0, 0, 148.402, 19.3455, 20.215, 0, 0, 0, 0, 0, 0, 152.322, 30.3772, 44.6684, 0, 0, 0, 0, 0, 0, 136.237, 38.2974, 72.5407, 0, 0, 0, 0, 0, 0, 103.365, 41.4089, 97.9839, 0, 0, 0, 0, 0, 0, 53.4039, 40.5603, 123.208, 0, 0, 0, 0, 0, 0, -21.3047, 32.7816, 145.235, 0, 0, 0, 0, 0, 0, -69.1296, 24.2957, 150.884, 0, 0, 0, 0, 0, 0, -129.542, 11.9911, 154.197, 0, 0, 0, 0, 0, 0, -183.505, -4.55641, 143.763, 0, 0, 0, 0, 0, 0, -213.011, -25.064, 110.432, 0, 0, 0, 0, 0, 0, -218.919, -39.49, 78.8815, 0, 0, 0, 0, 0, 0, -213.093, -51.5117, 46.7219, 0, 0, 0, 0, 0, 0, -171.343, -55.8961, 13.3641),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 17
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rw8gu"]
+albedo_color = Color(0.74902, 0.74902, 0.756863, 1)
+albedo_texture = ExtResource("1_wyihi")
+heightmap_scale = 16.0
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+subsurf_scatter_strength = 0.17
+texture_filter = 4
+distance_fade_mode = 3
+
+[node name="Road" type="Node3D"]
+script = ExtResource("1_mx2ds")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_2hov5")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+material_override = SubResource("StandardMaterial3D_rw8gu")
+snap = 1e-06
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 0.1, 6, 0.1, 6, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = false
+path_u_distance = 10.0
+path_joined = false
+
+[node name="Car" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(0.32933, -0.0877173, 0.940128, -0.631172, 0.720077, 0.288286, -0.702255, -0.688326, 0.181778, -133.882, 11.4073, 152.687)
+progress = 612.836
+v_offset = 1.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Path3D/Car"]
