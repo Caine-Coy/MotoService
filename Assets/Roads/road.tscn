@@ -45,8 +45,7 @@ path_u_distance = 10.0
 path_joined = false
 
 [node name="Car" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(0.32933, -0.0877173, 0.940128, -0.631172, 0.720077, 0.288286, -0.702255, -0.688326, 0.181778, -133.882, 11.4073, 152.687)
-progress = 612.836
+transform = Transform3D(-4.37114e-08, 0, -0.999996, 0, 0.999999, 0, 0.999999, 0, -4.37112e-08, -100, 1, 0)
 v_offset = 1.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Path3D/Car"]

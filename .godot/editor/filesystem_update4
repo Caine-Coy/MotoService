@@ -1,7 +1,5 @@
 res://NewportPagnell.tscn
 res://CameraController.gd
-res://Assets/Buildings/fuel_pump.gd
-res://WorldController.gd
-res://Assets/Buildings/fuel_pump.tscn
 res://camera.tscn
 res://Assets/Roads/road.tscn
+res://Assets/Buildings/fuel_pump.tscn
